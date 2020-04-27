@@ -1,33 +1,36 @@
-# SCsub
+#!/usr/bin/env python
 
 Import("env")
 
-env_tts = env.Clone()
-env_tts.add_source_files(env.modules_sources, "*.cpp") # Add all cpp files to the build
-env_tts.Append(CCFLAGS=[
+env_asr = env.Clone()
+env_asr.add_source_files(env.modules_sources, "*.cpp") # Add all cpp files to the build
+env_asr.Append(CCFLAGS=[
   "-isystem/data/kaldi/dist/include",
-  "-isystem/data/kaldi/tools/openfst/include",
-  "-L/data/kaldi/dist/lib",
-  "-lkaldi-base",
-  "-lkaldi-chain",
-  "-lkaldi-cudamatrix",
-  "-lkaldi-decoder",
-  "-lkaldi-feat",
-  "-lkaldi-fstext",
-  "-lkaldi-gmm",
-  "-lkaldi-hmm",
-  "-lkaldi-ivector",
-  "-lkaldi-kws",
-  "-lkaldi-lat",
-  "-lkaldi-lm",
-  "-lkaldi-matrix",
-  "-lkaldi-nnet",
-  "-lkaldi-nnet2",
-  "-lkaldi-nnet3",
-  "-lkaldi-online2",
-  "-lkaldi-rnnlm",
-  "-lkaldi-sgmm2",
-  "-lkaldi-transform",
-  "-lkaldi-tree",
-  "-lkaldi-util"
+  "-isystem/data/kaldi/tools/openfst/include"
 ])
+
+# env.Append(LIBPATH="/data/kaldi/dist/lib")
+env.Prepend(LIBS=[
+  File("/data/kaldi/dist/lib/kaldi-online2.a"),
+  File("/data/kaldi/dist/lib/kaldi-ivector.a"),
+  File("/data/kaldi/dist/lib/kaldi-nnet3.a"),
+  File("/data/kaldi/dist/lib/kaldi-chain.a"),
+  File("/data/kaldi/dist/lib/kaldi-nnet2.a"),
+  File("/data/kaldi/dist/lib/kaldi-cudamatrix.a"),
+  File("/data/kaldi/dist/lib/kaldi-decoder.a"),
+  File("/data/kaldi/dist/lib/kaldi-lat.a"),
+  File("/data/kaldi/dist/lib/kaldi-fstext.a"),
+  File("/data/kaldi/dist/lib/kaldi-hmm.a"),
+  File("/data/kaldi/dist/lib/kaldi-feat.a"),
+  File("/data/kaldi/dist/lib/kaldi-transform.a"),
+  File("/data/kaldi/dist/lib/kaldi-gmm.a"),
+  File("/data/kaldi/dist/lib/kaldi-tree.a"),
+  File("/data/kaldi/dist/lib/kaldi-util.a"),
+  File("/data/kaldi/dist/lib/kaldi-matrix.a"),
+  File("/data/kaldi/dist/lib/kaldi-base.a"),
+  File("/data/kaldi/tools/openfst-1.6.7/lib/libfst.a"),
+])
+
+env["LINKCOM"] += " -Wl,--start-group /opt/intel/mkl/lib/intel64/libmkl_intel_lp64.a /opt/intel/mkl/lib/intel64/libmkl_core.a /opt/intel/mkl/lib/intel64/libmkl_sequential.a -Wl,--end-group"
+
+env.Append(LIBS=["m"])

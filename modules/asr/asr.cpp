@@ -21,6 +21,8 @@ void ASR::initialize(StringName busName) {
   this->audioBusEffect = static_cast<Ref<AudioEffectRecord>>(audioServer->get_bus_effect(idx, 0));
 
   // initialize kaldi
+  this->kaldi = new Kaldi();
+  this->kaldi->initialize();
 }
 
 void ASR::start() {
@@ -44,10 +46,11 @@ void ASR::stop() {
   auto data = recording->get_data();
 
   // feed data to kaldi
-  for (int i = 0; i < data.size(); i++) {
-    auto chunk = data.get(i);
-  }
+  // for (int i = 0; i < data.size(); i++) {
+  //   auto chunk = data.get(i);
+  // }
   // get/return response from kaldi
+  this->kaldi->decode();
 }
 
 void ASR::_bind_methods() {

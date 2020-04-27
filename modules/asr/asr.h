@@ -7,6 +7,7 @@
 #include "servers/audio_server.h"
 #include "servers/audio/audio_effect.h"
 #include "servers/audio/effects/audio_effect_record.h"
+#include "kaldi.h"
 
 class ASR : public Reference {
   GDCLASS(ASR, Reference);
@@ -15,6 +16,8 @@ class ASR : public Reference {
 
   Ref<AudioEffectRecord> audioBusEffect;
   Ref<AudioStreamSample> recording;
+
+  Kaldi * kaldi;
 
   protected:
   static void _bind_methods();
