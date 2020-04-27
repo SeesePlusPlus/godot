@@ -21,7 +21,6 @@ class ASR : public Reference {
 
   public:
   ASR();
-  ~ASR();
 
   static ASR *get_singleton();
 

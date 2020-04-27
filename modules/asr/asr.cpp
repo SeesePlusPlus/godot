@@ -2,15 +2,17 @@
 
 #include "asr.h"
 
+ASR * ASR::singleton = NULL;
+
 ASR::ASR() {
 }
 
 ASR * ASR::get_singleton() {
-  if (!singleton) {
-    singleton = new ASR();
+  if (!ASR::singleton) {
+    ASR::singleton = new ASR();
   }
 
-  return singleton;
+  return ASR::singleton;
 }
 
 void ASR::initialize(StringName busName) {
